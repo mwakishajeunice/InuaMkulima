@@ -1,12 +1,41 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Author: Jeunice Mwakisha
 
-Currently, two official plugins are available:
+This project is a simple authentication system built using React and Material-UI (MUI). It includes:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A Login Page where users enter their username.
 
-## Expanding the ESLint configuration
+A Password Page where users input their password.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+API authentication for user validation.
+
+# Login api didn't work during development. You can view dashboard with /dashboard navigation
+
+A Dashboard Page with navigation for "Dashboard," "Transactions," and "Reports."
+
+Development-mode access to the dashboard without authentication.
+
+# Technologies Used
+
+React 19 (Frontend framework)
+
+React Router v6 (Navigation & routing)
+
+Material-UI (MUI) (UI components)
+
+Axios (API requests)
+
+# Do this first
+
+2️⃣ Install Dependencies
+
+npm install
+
+3️⃣ Run the Project
+
+npm run dev
+
+The app will start on http://localhost:5173.
+
+🔧 Dependencies & Installation

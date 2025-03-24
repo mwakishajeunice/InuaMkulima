@@ -10,7 +10,7 @@ import {
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import mkulimaImage from "../../assets/mkulima.jpeg";
+import mkulimaImage from "../../assets/mkulima.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -18,13 +18,20 @@ const Password = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const username = location.state?.username || "User";
+  const username = location.state?.username;
+
+  if (!username) {
+    navigate("/login");
+    return null;
+  }
 
   const handleSignIn = async () => {
     if (!password.trim()) {
-      alert("Please enter your password.");
+      setError(true);
+      setErrorMessage("Please enter your password.");
       return;
     }
 
@@ -32,15 +39,26 @@ const Password = () => {
       const response = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+        mode: "cors",
+        credentials: "include",
       });
 
-      if (!response.ok) throw new Error("Invalid credentials");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Invalid credentials");
+      }
 
+      const data = await response.json();
+      console.log("Login Successful:", data);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
-      setError(error.message);
+      setError(true);
+      setErrorMessage(error.message);
     }
   };
 
@@ -103,21 +121,6 @@ const Password = () => {
             <Typography variant="body1" sx={{ mb: 3 }}>
               Enter your password to continue
             </Typography>
-            {/* 
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              margin="normal"
-              variant="standard"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError(false);
-              }}
-              error={error}
-              helperText={error ? "Password is required" : ""}
-            /> */}
 
             <TextField
               label="Password"
@@ -125,7 +128,11 @@ const Password = () => {
               margin="normal"
               variant="standard"
               type={showPassword ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError(false);
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -136,9 +143,10 @@ const Password = () => {
                 ),
               }}
             />
+
             {error && (
               <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-                {error}
+                {errorMessage}
               </Typography>
             )}
 

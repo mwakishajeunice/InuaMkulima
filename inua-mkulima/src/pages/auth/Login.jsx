@@ -1,6 +1,8 @@
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
-import mkulimaImage from "../../assets/mkulima.jpeg";
+import mkulimaImage from "../../assets/mkulima.png";
+import loginImage from "../../assets/floral.png";
+
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +58,7 @@ const Login = () => {
               padding: 4,
               bgcolor: "background.paper",
               textAlign: "center",
+              background: `url(${loginImage}) center/cover`,
             }}
           >
             <Typography variant="h6" sx={{ mb: 1 }}>
